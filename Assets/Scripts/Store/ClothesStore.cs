@@ -1,4 +1,5 @@
 using System;
+using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Animations;
 using UnityEngine;
@@ -12,6 +13,7 @@ public class ClothesStore : MonoBehaviour
 
     [Space(5)]
     [Header("Clothes Toggles")]
+    [SerializeField] private Toggle[] _clothesToggles;
     [SerializeField] private Toggle[] _hatsToggles;
     [SerializeField] private Toggle[] _hairsToggles;
     [SerializeField] private Toggle[] _underwearsToggles;
@@ -36,6 +38,9 @@ public class ClothesStore : MonoBehaviour
     [Space(5)]
     [Header("Price Tags")]
     [SerializeField] private TMP_Text[] _priceTags;
+    [SerializeField] private TMP_Text _cartTotalText;
+    [SerializeField] private List<double> _cartAddedPrices;
+    private double _cartValue;
 
     private AnimatorController[][] _animatorsReferences;
     private string _currentDirection;
@@ -47,7 +52,7 @@ public class ClothesStore : MonoBehaviour
         for (int i = 0; i < _hatsToggles.Length; i++)
         {
             int j = i;
-            _hatsToggles[i].onValueChanged.AddListener( delegate { SetPreviewAnimation(_hatsToggles[j].isOn, j, _animatorsReferences[0], 1); });
+            _hatsToggles[i].onValueChanged.AddListener(delegate { SetPreviewAnimation(_hatsToggles[j].isOn, j, _animatorsReferences[0], 1); });
         }
 
         for (int i = 0; i < _hairsToggles.Length; i++)
@@ -73,7 +78,7 @@ public class ClothesStore : MonoBehaviour
         _downArrow.onClick.AddListener(() => SetPreviewAnimationDirection("IdleDown"));
         _upArrow.onClick.AddListener(() => SetPreviewAnimationDirection("IdleUp"));
 
-        _animatorsReferences = new AnimatorController[][] { _hatsAnimators , _hairsAnimators , _underwearAnimators , _outfitsAnimators };
+        _animatorsReferences = new AnimatorController[][] { _hatsAnimators, _hairsAnimators, _underwearAnimators, _outfitsAnimators };
         _currentDirection = "IdleDown";
     }
 
@@ -81,6 +86,10 @@ public class ClothesStore : MonoBehaviour
     {
         _clothes = new Clothes[] { _saveLoadSystem.HatOne, _saveLoadSystem.HatTwo, _saveLoadSystem.FemaleHair , _saveLoadSystem.MaleHair ,
             _saveLoadSystem.FemaleUnderwear, _saveLoadSystem.MaleUnderwear , _saveLoadSystem.OutfitOne , _saveLoadSystem.OutfitTwo };
+
+        _cartAddedPrices = new List<double>();
+        _cartValue = 0;
+        CalculateShopCart();
 
         LoadPriceTags();
     }
@@ -113,6 +122,7 @@ public class ClothesStore : MonoBehaviour
             _fittingRoomAnimator[currentAnimatorIndex].runtimeAnimatorController = animatorReference[animatorIndex];
 
         SetPreviewAnimationDirection(_currentDirection);
+        CalculateShopCart();
     }
 
     private void SetPreviewAnimationDirection(string animationName)
@@ -127,5 +137,20 @@ public class ClothesStore : MonoBehaviour
     {
         for (int i = 0; i < _priceTags.Length; i++)
             _priceTags[i].text = "$ " + string.Format("{0:0.00}", _clothes[i].Price);
+    }
+
+    private void CalculateShopCart()
+    {
+        _cartAddedPrices.Clear();
+        _cartValue = 0;
+
+        for (int i = 0; i < _clothesToggles.Length; i++)
+            if (_clothesToggles[i].isOn && !_clothes[i].Purchased)
+                _cartAddedPrices.Add(_clothes[i].Price);
+
+        foreach (double price in _cartAddedPrices)
+            _cartValue += price;
+
+        _cartTotalText.text = "$ " + string.Format("{0:0.00}", _cartValue);
     }
 }
