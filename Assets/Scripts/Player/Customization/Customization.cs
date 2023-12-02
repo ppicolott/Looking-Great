@@ -70,6 +70,11 @@ public class Customization : MonoBehaviour
         string[] lines = File.ReadAllLines(_customizationFilePath);
 
         for (int i = 0; i < lines.Length; i++)
+        {
             _clothesAnimators[i].runtimeAnimatorController = _currentVisuals[lines[i]];
+            _clothesAnimators[i].Play("IdleDown");
+            _clothesStore.FittingRoomAnimator[i + 1].runtimeAnimatorController = _clothesAnimators[i].runtimeAnimatorController;
+            _clothesStore.FittingRoomAnimator[i + 1].Play("IdleDown");
+        }
     }
 }

@@ -59,7 +59,7 @@ public class ClothesStore : MonoBehaviour
 
     public static Action OnCustomizePlayer;
 
-    private void Awake()
+    private void Start()
     {
         if (_cash == 0)
             _cash = 100d;
@@ -68,10 +68,7 @@ public class ClothesStore : MonoBehaviour
             _cash = double.Parse(PlayerPrefs.GetString("Cash"));
         else
             PlayerPrefs.SetString("Cash", _cash.ToString());
-    }
 
-    private void Start()
-    {
         _clothesData = new Clothes[] { _saveLoadSystem.HatOne, _saveLoadSystem.HatTwo, _saveLoadSystem.FemaleHair , _saveLoadSystem.MaleHair ,
             _saveLoadSystem.FemaleUnderwear, _saveLoadSystem.MaleUnderwear , _saveLoadSystem.OutfitOne , _saveLoadSystem.OutfitTwo };
 
