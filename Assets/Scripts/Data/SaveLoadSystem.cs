@@ -7,6 +7,19 @@ public class SaveLoadSystem : MonoBehaviour
     private string _json;
     private string[] filePaths;
 
+#if UNITY_EDITOR
+    [ReadOnly] public Clothes HatOne;
+    [ReadOnly] public Clothes HatTwo;
+
+    [ReadOnly] public Clothes FemaleHair;
+    [ReadOnly] public Clothes MaleHair;
+
+    [ReadOnly] public Clothes FemaleUnderwear;
+    [ReadOnly] public Clothes MaleUnderwear;
+
+    [ReadOnly] public Clothes OutfitOne;
+    [ReadOnly] public Clothes OutfitTwo;
+#else
     public Clothes HatOne;
     public Clothes HatTwo;
 
@@ -18,6 +31,7 @@ public class SaveLoadSystem : MonoBehaviour
 
     public Clothes OutfitOne;
     public Clothes OutfitTwo;
+#endif
 
     private void Awake()
     {

@@ -7267,7 +7267,7 @@ GameObject:
   - component: {fileID: 1363244333}
   - component: {fileID: 1363244334}
   m_Layer: 5
-  m_Name: '[TEST]'
+  m_Name: SaveLoadSystem
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -7305,6 +7305,54 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 955adc2f9eaca0e448ca4af85ff30a7b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  HatOne:
+    ID: 
+    FilePath: 
+    Purchased: 0
+    Equiped: 0
+    Price: 0
+  HatTwo:
+    ID: 
+    FilePath: 
+    Purchased: 0
+    Equiped: 0
+    Price: 0
+  FemaleHair:
+    ID: 
+    FilePath: 
+    Purchased: 0
+    Equiped: 0
+    Price: 0
+  MaleHair:
+    ID: 
+    FilePath: 
+    Purchased: 0
+    Equiped: 0
+    Price: 0
+  FemaleUnderwear:
+    ID: 
+    FilePath: 
+    Purchased: 0
+    Equiped: 0
+    Price: 0
+  MaleUnderwear:
+    ID: 
+    FilePath: 
+    Purchased: 0
+    Equiped: 0
+    Price: 0
+  OutfitOne:
+    ID: 
+    FilePath: 
+    Purchased: 0
+    Equiped: 0
+    Price: 0
+  OutfitTwo:
+    ID: 
+    FilePath: 
+    Purchased: 0
+    Equiped: 0
+    Price: 0
 --- !u!1 &1379356256
 GameObject:
   m_ObjectHideFlags: 0
