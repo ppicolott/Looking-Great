@@ -35,7 +35,8 @@ public class ClothesStore : MonoBehaviour
     [SerializeField] private AnimatorController _nakedAnimator;
 
     [Space(5)]
-    [Header("Price Tags")]
+    [Header("Cash and Price Tags")]
+    [SerializeField] private TMP_Text _cashText;
     [SerializeField] private TMP_Text[] _priceTags;
     [SerializeField] private TMP_Text _cartTotalText;
 #if UNITY_EDITOR
@@ -44,12 +45,13 @@ public class ClothesStore : MonoBehaviour
     private List<double> _cartAddedPrices;
 #endif
     private double _cartValue;
+    private double _cash;
 
     private AnimatorController[][] _animatorsReferences;
     private string _currentDirection;
 
     [Space(5)]
-    [Header("Arrow Buttons")]
+    [Header("Store Features Buttons")]
     [SerializeField] private Button _purchaseClothesButton;
     [SerializeField] private Button _exitStoreButton;
 
@@ -97,6 +99,10 @@ public class ClothesStore : MonoBehaviour
     {
         _clothes = new Clothes[] { _saveLoadSystem.HatOne, _saveLoadSystem.HatTwo, _saveLoadSystem.FemaleHair , _saveLoadSystem.MaleHair ,
             _saveLoadSystem.FemaleUnderwear, _saveLoadSystem.MaleUnderwear , _saveLoadSystem.OutfitOne , _saveLoadSystem.OutfitTwo };
+
+        if (_cash == 0)
+            _cash = 100d;
+        _cashText.text = "Cash: $ " + string.Format("{0:0.00}", _cash);
 
         _cartAddedPrices = new List<double>();
         _cartValue = 0;
@@ -193,7 +199,8 @@ public class ClothesStore : MonoBehaviour
 
     private void PurchaseClothes()
     {
-        // TODO: Cash -= Prices
+        _cash -= _cartValue;
+        _cashText.text = "Cash: $ " + string.Format("{0:0.00}", _cash);
 
         _cartAddedPrices.Clear();
         _cartValue = 0;
