@@ -1,9 +1,16 @@
+using System;
+using TMPro;
 using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
 public class ClothesStore : MonoBehaviour
 {
+    [Header("Clothes Data")]
+    [SerializeField] private SaveLoadSystem _saveLoadSystem;
+    private Clothes[] _clothes;
+
+    [Space(5)]
     [Header("Clothes Toggles")]
     [SerializeField] private Toggle[] _hatsToggles;
     [SerializeField] private Toggle[] _hairsToggles;
@@ -18,13 +25,17 @@ public class ClothesStore : MonoBehaviour
     [SerializeField] private Button _upArrow;
 
     [Space(5)]
-    [Header("Animation")]
+    [Header("Animations")]
     [SerializeField] private Animator[] _fittingRoomAnimator;
     [SerializeField] private AnimatorController[] _hatsAnimators;
     [SerializeField] private AnimatorController[] _hairsAnimators;
     [SerializeField] private AnimatorController[] _underwearAnimators;
     [SerializeField] private AnimatorController[] _outfitsAnimators;
     [SerializeField] private AnimatorController _nakedAnimator;
+
+    [Space(5)]
+    [Header("Price Tags")]
+    [SerializeField] private TMP_Text[] _priceTags;
 
     private AnimatorController[][] _animatorsReferences;
     private string _currentDirection;
@@ -66,6 +77,14 @@ public class ClothesStore : MonoBehaviour
         _currentDirection = "IdleDown";
     }
 
+    private void Start()
+    {
+        _clothes = new Clothes[] { _saveLoadSystem.HatOne, _saveLoadSystem.HatTwo, _saveLoadSystem.FemaleHair , _saveLoadSystem.MaleHair ,
+            _saveLoadSystem.FemaleUnderwear, _saveLoadSystem.MaleUnderwear , _saveLoadSystem.OutfitOne , _saveLoadSystem.OutfitTwo };
+
+        LoadPriceTags();
+    }
+
     private void OnDestroy()
     {
         for (int i = 0; i < _hatsToggles.Length; i++)
@@ -102,5 +121,11 @@ public class ClothesStore : MonoBehaviour
             _fittingRoomAnimator[i].Play(animationName);
 
         _currentDirection = animationName;
+    }
+
+    private void LoadPriceTags()
+    {
+        for (int i = 0; i < _priceTags.Length; i++)
+            _priceTags[i].text = "$ " + string.Format("{0:0.00}", _clothes[i].Price);
     }
 }

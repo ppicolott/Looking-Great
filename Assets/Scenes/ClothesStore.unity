@@ -1310,6 +1310,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 659ed3b2bb730fe4a8ae46cd3495cc74, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _saveLoadSystem: {fileID: 1363244334}
   _hatsToggles:
   - {fileID: 1388091836}
   - {fileID: 142367696}
@@ -1345,6 +1346,15 @@ MonoBehaviour:
   - {fileID: 9100000, guid: 0df31d56199960049ae3baa5fc741f79, type: 2}
   - {fileID: 9100000, guid: 7deb2e3e2c506dd46a8b876b85b590c1, type: 2}
   _nakedAnimator: {fileID: 9100000, guid: af785aaa285f4984ba69622d3db75f0c, type: 2}
+  _priceTags:
+  - {fileID: 899654184}
+  - {fileID: 426175583}
+  - {fileID: 37822475}
+  - {fileID: 1511141439}
+  - {fileID: 34622913}
+  - {fileID: 139293308}
+  - {fileID: 1149804911}
+  - {fileID: 1696387908}
 --- !u!1 &229874544
 GameObject:
   m_ObjectHideFlags: 0
