@@ -48,7 +48,7 @@ public class UIStates : MonoBehaviour
         _gameStateMaxIndex = Enum.GetValues(typeof(GameStates)).Length - 1;
         _gameStateIndex = 0;
         CurrentState = GameStates.MainMenuScreen;
-        StartCoroutine(SetState());
+        // StartCoroutine(SetState());
     }
 
     private void OnDestroy()
