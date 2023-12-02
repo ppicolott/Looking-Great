@@ -59,6 +59,16 @@ public class ClothesStore : MonoBehaviour
 
     private void Awake()
     {
+        if (_cash == 0)
+            _cash = 100d;
+
+        if (PlayerPrefs.HasKey("Cash"))
+            _cash = double.Parse(PlayerPrefs.GetString("Cash"));
+        else
+            PlayerPrefs.SetString("Cash", _cash.ToString());
+
+        _cashText.text = "Cash: $ " + string.Format("{0:0.00}", _cash);
+
         for (int i = 0; i < _hatsToggles.Length; i++)
         {
             int j = i;
@@ -99,10 +109,6 @@ public class ClothesStore : MonoBehaviour
     {
         _clothes = new Clothes[] { _saveLoadSystem.HatOne, _saveLoadSystem.HatTwo, _saveLoadSystem.FemaleHair , _saveLoadSystem.MaleHair ,
             _saveLoadSystem.FemaleUnderwear, _saveLoadSystem.MaleUnderwear , _saveLoadSystem.OutfitOne , _saveLoadSystem.OutfitTwo };
-
-        if (_cash == 0)
-            _cash = 100d;
-        _cashText.text = "Cash: $ " + string.Format("{0:0.00}", _cash);
 
         _cartAddedPrices = new List<double>();
         _cartValue = 0;
@@ -201,6 +207,7 @@ public class ClothesStore : MonoBehaviour
     {
         _cash -= _cartValue;
         _cashText.text = "Cash: $ " + string.Format("{0:0.00}", _cash);
+        PlayerPrefs.SetString("Cash", _cash.ToString());
 
         _cartAddedPrices.Clear();
         _cartValue = 0;
