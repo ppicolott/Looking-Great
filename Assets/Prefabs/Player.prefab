@@ -662,6 +662,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f5f3bb649007524e81240aea7346760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _clothesStore: {fileID: 0}
   _clothesAnimators:
   - {fileID: 6324549276445007292}
   - {fileID: 5627848191320531709}

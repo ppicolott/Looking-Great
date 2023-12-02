@@ -1,13 +1,10 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class Customization : MonoBehaviour
 {
+    [SerializeField] private ClothesStore _clothesStore;
     [SerializeField] private Animator[] _clothesAnimators;
-
     [SerializeField] private AnimatorController[] _hatsAnimators;
     [SerializeField] private AnimatorController[] _hairsAnimators;
     [SerializeField] private AnimatorController[] _underwearAnimators;
@@ -15,14 +12,22 @@ public class Customization : MonoBehaviour
 
     public Animator[] ClothesAnimators => _clothesAnimators;
 
-    private void Update()
+    private void Awake()
     {
-        if (Keyboard.current.cKey.wasPressedThisFrame)
-            ChangeOutfit();
+        ClothesStore.OnCustomizePlayer += CustomizePlayerVisuals;
     }
 
-    private void ChangeOutfit()
+    private void OnDestroy()
     {
-        _clothesAnimators[3].runtimeAnimatorController = _outfitsAnimators[0];
+        ClothesStore.OnCustomizePlayer -= CustomizePlayerVisuals;
+    }
+
+    private void CustomizePlayerVisuals()
+    {
+        for (int i = 0; i < _clothesStore.FittingRoomAnimator.Length - 1; i++)
+        {
+            int j = i + 1;
+            _clothesAnimators[i].runtimeAnimatorController = _clothesStore.FittingRoomAnimator[j].runtimeAnimatorController;
+        }
     }
 }
