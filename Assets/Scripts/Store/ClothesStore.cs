@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Animations;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ClothesStore : MonoBehaviour
@@ -49,6 +50,11 @@ public class ClothesStore : MonoBehaviour
     private AnimatorController[][] _animatorsReferences;
     private string _currentDirection;
 
+    [Space(5)]
+    [Header("Arrow Buttons")]
+    [SerializeField] private Button _purchaseClothesButton;
+    [SerializeField] private Button _exitStoreButton;
+
     public Animator[] FittingRoomAnimator => _fittingRoomAnimator;
 
     private void Awake()
@@ -84,6 +90,9 @@ public class ClothesStore : MonoBehaviour
 
         _animatorsReferences = new AnimatorController[][] { _hatsAnimators, _hairsAnimators, _underwearAnimators, _outfitsAnimators };
         _currentDirection = "IdleDown";
+
+        _purchaseClothesButton.onClick.AddListener(PurchaseClothes);
+        _exitStoreButton.onClick.AddListener(ExitStore);
     }
 
     private void Start()
@@ -116,6 +125,9 @@ public class ClothesStore : MonoBehaviour
         _rightArrow.onClick.RemoveAllListeners();
         _downArrow.onClick.RemoveAllListeners();
         _upArrow.onClick.RemoveAllListeners();
+
+        _purchaseClothesButton.onClick.RemoveAllListeners();
+        _exitStoreButton.onClick.RemoveAllListeners();
     }
 
     private void SetPreviewAnimation(bool enabled, int animatorIndex, AnimatorController[] animatorReference, int currentAnimatorIndex)
@@ -156,5 +168,27 @@ public class ClothesStore : MonoBehaviour
             _cartValue += price;
 
         _cartTotalText.text = "$ " + string.Format("{0:0.00}", _cartValue);
+    }
+
+    private void PurchaseClothes()
+    {
+        // TODO: Cash -= Prices
+
+        _cartAddedPrices.Clear();
+        _cartValue = 0;
+
+        for (int i = 0; i < _clothesToggles.Length; i++)
+        {
+            if (_clothesToggles[i].isOn && !_clothes[i].Purchased)
+            {
+                _clothes[i].Purchased = true;
+                _saveLoadSystem.UpdateData(_clothes[i].FilePath, _clothes[i], true, true);
+            }
+        }
+    }
+
+    private void ExitStore()
+    {
+        //TODO
     }
 }

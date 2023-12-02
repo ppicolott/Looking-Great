@@ -1366,6 +1366,8 @@ MonoBehaviour:
   - {fileID: 1696387908}
   _cartTotalText: {fileID: 295908327}
   _cartAddedPrices: []
+  _purchaseClothesButton: {fileID: 1471898943}
+  _exitStoreButton: {fileID: 1426648675}
 --- !u!1 &229874544
 GameObject:
   m_ObjectHideFlags: 0
@@ -9963,7 +9965,7 @@ GameObject:
   - component: {fileID: 1471898944}
   - component: {fileID: 1471898943}
   m_Layer: 5
-  m_Name: BuyButton
+  m_Name: PurchaseButton
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

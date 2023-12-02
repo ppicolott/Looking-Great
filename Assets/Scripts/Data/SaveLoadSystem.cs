@@ -1,6 +1,6 @@
+using System.Collections;
 using System.IO;
 using UnityEngine;
-using UnityEngine.InputSystem;
 
 public class SaveLoadSystem : MonoBehaviour
 {
@@ -46,7 +46,10 @@ public class SaveLoadSystem : MonoBehaviour
 
         filePaths = Directory.GetFiles(Application.persistentDataPath + "/", "*.json");
         if (filePaths.Length == 0)
+        {
             CreateData();
+            filePaths = Directory.GetFiles(Application.persistentDataPath + "/", "*.json");
+        }
 
         LoadData();
     }
@@ -54,74 +57,60 @@ public class SaveLoadSystem : MonoBehaviour
     private void CreateData()
     {
         HatOne.ID = "HatOne";
-        HatOne.FilePath = Application.persistentDataPath + "/HatOneData.json";
+        HatOne.FilePath = Application.persistentDataPath + "/01-HatOneData.json";
         HatOne.Price = 10.00d;
         HatOne.Equiped = false;
         HatOne.Purchased = false;
         SaveData(HatOne.FilePath, HatOne);
 
         HatTwo.ID = "HatTwo";
-        HatTwo.FilePath = Application.persistentDataPath + "/HatTwoData.json";
+        HatTwo.FilePath = Application.persistentDataPath + "/02-HatTwoData.json";
         HatTwo.Price = 12.00d;
         HatTwo.Equiped = false;
         HatTwo.Purchased = false;
         SaveData(HatTwo.FilePath, HatTwo);
 
         FemaleHair.ID = "FemaleHair";
-        FemaleHair.FilePath = Application.persistentDataPath + "/FemaleHairData.json";
+        FemaleHair.FilePath = Application.persistentDataPath + "/03-FemaleHairData.json";
         FemaleHair.Price = 15.00d;
         FemaleHair.Equiped = false;
         FemaleHair.Purchased = false;
         SaveData(FemaleHair.FilePath, FemaleHair);
 
         MaleHair.ID = "MaleHair";
-        MaleHair.FilePath = Application.persistentDataPath + "/MaleHairData.json";
+        MaleHair.FilePath = Application.persistentDataPath + "/04-MaleHairData.json";
         MaleHair.Price = 15.00d;
         MaleHair.Equiped = false;
         MaleHair.Purchased = false;
         SaveData(MaleHair.FilePath, MaleHair);
 
         FemaleUnderwear.ID = "FemaleUnderwear";
-        FemaleUnderwear.FilePath = Application.persistentDataPath + "/FemaleUnderwearData.json";
+        FemaleUnderwear.FilePath = Application.persistentDataPath + "/05-FemaleUnderwearData.json";
         FemaleUnderwear.Price = 10.00d;
         FemaleUnderwear.Equiped = false;
         FemaleUnderwear.Purchased = false;
         SaveData(FemaleUnderwear.FilePath, FemaleUnderwear);
 
         MaleUnderwear.ID = "MaleUnderwear";
-        MaleUnderwear.FilePath = Application.persistentDataPath + "/MaleUnderwearData.json";
+        MaleUnderwear.FilePath = Application.persistentDataPath + "/06-MaleUnderwearData.json";
         MaleUnderwear.Price = 8.00d;
         MaleUnderwear.Equiped = false;
         MaleUnderwear.Purchased = false;
         SaveData(MaleUnderwear.FilePath, MaleUnderwear);
 
         OutfitOne.ID = "OutfitOne";
-        OutfitOne.FilePath = Application.persistentDataPath + "/OutfitOneData.json";
+        OutfitOne.FilePath = Application.persistentDataPath + "/07-OutfitOneData.json";
         OutfitOne.Price = 30.00d;
         OutfitOne.Equiped = false;
         OutfitOne.Purchased = false;
         SaveData(OutfitOne.FilePath, OutfitOne);
 
         OutfitTwo.ID = "OutfitTwo";
-        OutfitTwo.FilePath = Application.persistentDataPath + "/OutfitTwoData.json";
+        OutfitTwo.FilePath = Application.persistentDataPath + "/08-OutfitTwoData.json";
         OutfitTwo.Price = 28.00d;
         OutfitTwo.Equiped = false;
         OutfitTwo.Purchased = false;
         SaveData(OutfitTwo.FilePath, OutfitTwo);
-    }
-
-    private void Update()
-    {
-        // Temporary - Debug:
-        if (Keyboard.current.spaceKey.wasPressedThisFrame)
-            UpdateData(OutfitTwo.FilePath, OutfitTwo, true, true);
-    }
-
-    private void UpdateData(string filePath, Clothes clothes, bool purchased, bool equiped)
-    {
-        clothes.Purchased = purchased;
-        clothes.Equiped = equiped;
-        SaveData(filePath, clothes);
     }
 
     private void SaveData(string filepath, Clothes clothes)
@@ -156,5 +145,12 @@ public class SaveLoadSystem : MonoBehaviour
 
         _json = File.ReadAllText(filePaths[7]);
         OutfitTwo = JsonUtility.FromJson<Clothes>(_json);
+    }
+
+    public void UpdateData(string filePath, Clothes clothes, bool purchased, bool equiped)
+    {
+        clothes.Purchased = purchased;
+        clothes.Equiped = equiped;
+        SaveData(filePath, clothes);
     }
 }
