@@ -15,7 +15,9 @@ public class Movement : MonoBehaviour
 
     private void Awake()
     {
-        _speed = 1.5f;
+        if (_speed == 0)
+            _speed = 5f;
+
         _movementInput.action.started += GetDirection;
     }
 
