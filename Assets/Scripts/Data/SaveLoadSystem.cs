@@ -59,56 +59,56 @@ public class SaveLoadSystem : MonoBehaviour
         HatOne.ID = "HatOne";
         HatOne.FilePath = Application.persistentDataPath + "/01-HatOneData.json";
         HatOne.Price = 10.00d;
-        HatOne.Equiped = false;
+        HatOne.Equipped = false;
         HatOne.Purchased = false;
         SaveData(HatOne.FilePath, HatOne);
 
         HatTwo.ID = "HatTwo";
         HatTwo.FilePath = Application.persistentDataPath + "/02-HatTwoData.json";
         HatTwo.Price = 12.00d;
-        HatTwo.Equiped = false;
+        HatTwo.Equipped = false;
         HatTwo.Purchased = false;
         SaveData(HatTwo.FilePath, HatTwo);
 
         FemaleHair.ID = "FemaleHair";
         FemaleHair.FilePath = Application.persistentDataPath + "/03-FemaleHairData.json";
         FemaleHair.Price = 15.00d;
-        FemaleHair.Equiped = false;
+        FemaleHair.Equipped = false;
         FemaleHair.Purchased = false;
         SaveData(FemaleHair.FilePath, FemaleHair);
 
         MaleHair.ID = "MaleHair";
         MaleHair.FilePath = Application.persistentDataPath + "/04-MaleHairData.json";
         MaleHair.Price = 15.00d;
-        MaleHair.Equiped = false;
+        MaleHair.Equipped = false;
         MaleHair.Purchased = false;
         SaveData(MaleHair.FilePath, MaleHair);
 
         FemaleUnderwear.ID = "FemaleUnderwear";
         FemaleUnderwear.FilePath = Application.persistentDataPath + "/05-FemaleUnderwearData.json";
         FemaleUnderwear.Price = 10.00d;
-        FemaleUnderwear.Equiped = false;
+        FemaleUnderwear.Equipped = false;
         FemaleUnderwear.Purchased = false;
         SaveData(FemaleUnderwear.FilePath, FemaleUnderwear);
 
         MaleUnderwear.ID = "MaleUnderwear";
         MaleUnderwear.FilePath = Application.persistentDataPath + "/06-MaleUnderwearData.json";
         MaleUnderwear.Price = 8.00d;
-        MaleUnderwear.Equiped = false;
+        MaleUnderwear.Equipped = false;
         MaleUnderwear.Purchased = false;
         SaveData(MaleUnderwear.FilePath, MaleUnderwear);
 
         OutfitOne.ID = "OutfitOne";
         OutfitOne.FilePath = Application.persistentDataPath + "/07-OutfitOneData.json";
         OutfitOne.Price = 30.00d;
-        OutfitOne.Equiped = false;
+        OutfitOne.Equipped = false;
         OutfitOne.Purchased = false;
         SaveData(OutfitOne.FilePath, OutfitOne);
 
         OutfitTwo.ID = "OutfitTwo";
         OutfitTwo.FilePath = Application.persistentDataPath + "/08-OutfitTwoData.json";
         OutfitTwo.Price = 28.00d;
-        OutfitTwo.Equiped = false;
+        OutfitTwo.Equipped = false;
         OutfitTwo.Purchased = false;
         SaveData(OutfitTwo.FilePath, OutfitTwo);
     }
@@ -150,7 +150,7 @@ public class SaveLoadSystem : MonoBehaviour
     public void UpdateData(string filePath, Clothes clothes, bool purchased, bool equiped)
     {
         clothes.Purchased = purchased;
-        clothes.Equiped = equiped;
+        clothes.Equipped = equiped;
         SaveData(filePath, clothes);
     }
 }

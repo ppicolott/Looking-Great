@@ -91,18 +91,19 @@ public class ClothesStore : MonoBehaviour
 
         _purchaseClothesButton.onClick.AddListener(PurchaseClothes);
         _exitStoreButton.onClick.AddListener(ExitStore);
+    }
 
+    private void Start()
+    {
         _clothes = new Clothes[] { _saveLoadSystem.HatOne, _saveLoadSystem.HatTwo, _saveLoadSystem.FemaleHair , _saveLoadSystem.MaleHair ,
             _saveLoadSystem.FemaleUnderwear, _saveLoadSystem.MaleUnderwear , _saveLoadSystem.OutfitOne , _saveLoadSystem.OutfitTwo };
 
         _cartAddedPrices = new List<double>();
         _cartValue = 0;
-    }
 
-    private void OnEnable()
-    {
         LoadPriceTags();
         CalculateShopCart();
+        LoadEquippedClothes();
     }
 
     private void OnDestroy()
@@ -128,12 +129,18 @@ public class ClothesStore : MonoBehaviour
         _exitStoreButton.onClick.RemoveAllListeners();
     }
 
-    private void SetPreviewAnimation(bool enabled, int animatorIndex, AnimatorController[] animatorReference, int currentAnimatorIndex)
+    private void SetPreviewAnimation(bool toggleOn, int animatorIndex, AnimatorController[] animatorReference, int currentAnimatorIndex)
     {
-        if (!enabled)
+        if (!toggleOn)
             _fittingRoomAnimator[currentAnimatorIndex].runtimeAnimatorController = _nakedAnimator;
         else
             _fittingRoomAnimator[currentAnimatorIndex].runtimeAnimatorController = animatorReference[animatorIndex];
+
+        for (int i = 0; i < _clothes.Length; i++)
+        {
+            bool equiped = _clothesToggles[i].isOn && _clothes[i].Purchased;
+            _saveLoadSystem.UpdateData(_clothes[i].FilePath, _clothes[i], _clothes[i].Purchased, equiped);
+        }
 
         SetPreviewAnimationDirection(_currentDirection);
         CalculateShopCart();
@@ -145,6 +152,17 @@ public class ClothesStore : MonoBehaviour
             _fittingRoomAnimator[i].Play(animationName);
 
         _currentDirection = animationName;
+    }
+
+    private void LoadEquippedClothes()
+    {
+        for (int i = 0; i < _clothesToggles.Length; i++)
+        {
+            if (_clothes[i].Equipped)
+                _clothesToggles[i].isOn = true;
+            else
+                _clothesToggles[i].isOn = false;
+        }
     }
 
     private void LoadPriceTags()
