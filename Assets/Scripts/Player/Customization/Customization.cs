@@ -8,13 +8,13 @@ public class Customization : MonoBehaviour
     [SerializeField] private ClothesStore _clothesStore;
     [SerializeField] private Animator[] _clothesAnimators;
     [SerializeField] private List<RuntimeAnimatorController> _animatorControllers;
-    [SerializeField] private List<string> _currentAnimatorControllers;
     [SerializeField] private AnimatorController[] _hatsAnimators;
     [SerializeField] private AnimatorController[] _hairsAnimators;
     [SerializeField] private AnimatorController[] _underwearAnimators;
     [SerializeField] private AnimatorController[] _outfitsAnimators;
     private string _customizationFilePath;
     private Dictionary<string, RuntimeAnimatorController> _currentVisuals;
+    private List<string> _currentAnimatorControllers;
 
     public Animator[] ClothesAnimators => _clothesAnimators;
 
@@ -58,7 +58,7 @@ public class Customization : MonoBehaviour
 
     private void SaveCurrentClothes()
     {
-        // File.WriteAllText(_customizationFilePath, "");
+        File.WriteAllText(_customizationFilePath, "");
 
         for (int i = 0; i < _currentAnimatorControllers.Count; i++)
             File.AppendAllText(_customizationFilePath, _currentAnimatorControllers[i] + "\n");
