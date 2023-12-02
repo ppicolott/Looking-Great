@@ -23,6 +23,6 @@ public class Customization : MonoBehaviour
 
     private void ChangeOutfit()
     {
-        _clothesAnimators[5].runtimeAnimatorController = _outfitsAnimators[0];
+        _clothesAnimators[3].runtimeAnimatorController = _outfitsAnimators[0];
     }
 }
