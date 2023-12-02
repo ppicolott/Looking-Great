@@ -39,7 +39,11 @@ public class ClothesStore : MonoBehaviour
     [Header("Price Tags")]
     [SerializeField] private TMP_Text[] _priceTags;
     [SerializeField] private TMP_Text _cartTotalText;
-    [SerializeField] private List<double> _cartAddedPrices;
+#if UNITY_EDITOR
+    [ReadOnly][SerializeField] private List<double> _cartAddedPrices;
+#else
+    private List<double> _cartAddedPrices;
+#endif
     private double _cartValue;
 
     private AnimatorController[][] _animatorsReferences;
