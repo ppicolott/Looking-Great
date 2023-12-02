@@ -51,9 +51,8 @@ public class ClothesStore : MonoBehaviour
     private string _currentDirection;
 
     [Space(5)]
-    [Header("Store Features Buttons")]
+    [Header("Store Purchase Button")]
     [SerializeField] private Button _purchaseClothesButton;
-    [SerializeField] private Button _exitStoreButton;
 
     public Animator[] FittingRoomAnimator => _fittingRoomAnimator;
 
@@ -102,7 +101,6 @@ public class ClothesStore : MonoBehaviour
         _currentDirection = "IdleDown";
 
         _purchaseClothesButton.onClick.AddListener(PurchaseClothes);
-        _exitStoreButton.onClick.AddListener(ExitStore);
     }
 
     private void Start()
@@ -138,7 +136,6 @@ public class ClothesStore : MonoBehaviour
         _upArrow.onClick.RemoveAllListeners();
 
         _purchaseClothesButton.onClick.RemoveAllListeners();
-        _exitStoreButton.onClick.RemoveAllListeners();
     }
 
     private void SetPreviewAnimation(bool toggleOn, int animatorIndex, AnimatorController[] animatorReference, int currentAnimatorIndex)
@@ -223,10 +220,5 @@ public class ClothesStore : MonoBehaviour
 
         LoadPriceTags();
         CalculateShopCart();
-    }
-
-    private void ExitStore()
-    {
-        //TODO
     }
 }

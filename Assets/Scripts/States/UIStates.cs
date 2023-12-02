@@ -2,16 +2,26 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UIStates : MonoBehaviour
 {
+    [Header("Player Input")]
+    [SerializeField] private PlayerInput _playerInput;
+
+    [Space(10)]
     [Header("Screens")]
     [SerializeField] private GameObject[] _screens;
 
     [Space(10)]
     [Header("Buttons")]
     [SerializeField] private Button[] _buttons;
+
+    [Space(10)]
+    [Header("Store Canvas")]
+    [SerializeField] private GameObject _storeCanvas;
+    [SerializeField] private Button _exitStoreButton;
 
     [Space(10)]
     [Header("UI Animation")]
@@ -48,7 +58,11 @@ public class UIStates : MonoBehaviour
         _gameStateMaxIndex = Enum.GetValues(typeof(GameStates)).Length - 1;
         _gameStateIndex = 0;
         CurrentState = GameStates.MainMenuScreen;
-        // StartCoroutine(SetState());
+        StartCoroutine(SetState());
+
+        _exitStoreButton.onClick.AddListener(StopStore);
+
+        Interactions.OnStoreCollision += StartStore;
     }
 
     private void OnDestroy()
@@ -57,6 +71,10 @@ public class UIStates : MonoBehaviour
 
         for (int i = 0; i < _buttons.Length; i++)
             _buttons[i].onClick.RemoveAllListeners();
+
+        _exitStoreButton.onClick.RemoveAllListeners();
+
+        Interactions.OnStoreCollision -= StartStore;
     }
 
     private void NextState()
@@ -75,6 +93,7 @@ public class UIStates : MonoBehaviour
         switch (CurrentState)
         {
             case GameStates.MainMenuScreen:
+                _storeCanvas.SetActive(false);
                 SetScreens(GameStates.MainMenuScreen);
                 break;
 
@@ -115,5 +134,17 @@ public class UIStates : MonoBehaviour
         previousScreen.transform.localPosition = Vector3.zero;
 
         yield break;
+    }
+
+    private void StartStore()
+    {
+        _playerInput.actions.Disable();
+        _storeCanvas.SetActive(true);
+    }
+
+    private void StopStore()
+    {
+        _storeCanvas.SetActive(false);
+        _playerInput.actions.Enable();
     }
 }
