@@ -544,7 +544,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 4
   m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.4627451, g: 0.3647059, b: 0.24705882, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -2186,7 +2186,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.40658814, b: 0, a: 1}
+  m_Color: {r: 0.2901961, g: 0.7058824, b: 0.34509805, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -2976,6 +2976,18 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 236155911}
     m_Modifications:
+    - target: {fileID: 562658675407798475, guid: be5dc7e7bb27349408dba8b60ed25b00, type: 3}
+      propertyPath: m_Color.b
+      value: 0.24705882
+      objectReference: {fileID: 0}
+    - target: {fileID: 562658675407798475, guid: be5dc7e7bb27349408dba8b60ed25b00, type: 3}
+      propertyPath: m_Color.g
+      value: 0.3647059
+      objectReference: {fileID: 0}
+    - target: {fileID: 562658675407798475, guid: be5dc7e7bb27349408dba8b60ed25b00, type: 3}
+      propertyPath: m_Color.r
+      value: 0.4627451
+      objectReference: {fileID: 0}
     - target: {fileID: 1449680620713103553, guid: be5dc7e7bb27349408dba8b60ed25b00, type: 3}
       propertyPath: m_Name
       value: Player
@@ -3028,6 +3040,18 @@ PrefabInstance:
       propertyPath: _clothesStore
       value: 
       objectReference: {fileID: 200140959}
+    - target: {fileID: 8434169003046180204, guid: be5dc7e7bb27349408dba8b60ed25b00, type: 3}
+      propertyPath: m_Color.b
+      value: 0.34509805
+      objectReference: {fileID: 0}
+    - target: {fileID: 8434169003046180204, guid: be5dc7e7bb27349408dba8b60ed25b00, type: 3}
+      propertyPath: m_Color.g
+      value: 0.7058824
+      objectReference: {fileID: 0}
+    - target: {fileID: 8434169003046180204, guid: be5dc7e7bb27349408dba8b60ed25b00, type: 3}
+      propertyPath: m_Color.r
+      value: 0.2901961
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: be5dc7e7bb27349408dba8b60ed25b00, type: 3}
 --- !u!4 &637008955 stripped
@@ -4052,7 +4076,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.9245283, g: 0.734431, b: 0.4410822, a: 1}
+  m_Color: {r: 0.4627451, g: 0.3647059, b: 0.24705882, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -6237,7 +6261,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 2
   m_Sprite: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Color: {r: 0.2901961, g: 0.7058824, b: 0.34509805, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
