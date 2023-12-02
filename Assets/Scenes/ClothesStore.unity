@@ -1511,7 +1511,7 @@ GameObject:
   - component: {fileID: 949439558}
   m_Layer: 6
   m_Name: Base
-  m_TagString: Untagged
+  m_TagString: ClothesStore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5164,7 +5164,7 @@ GameObject:
   - component: {fileID: 1584972753}
   m_Layer: 6
   m_Name: Top
-  m_TagString: Untagged
+  m_TagString: ClothesStore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5224,7 +5224,7 @@ TilemapRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 1
+  m_SortingOrder: 6
   m_ChunkSize: {x: 32, y: 32, z: 32}
   m_ChunkCullingBounds: {x: 0, y: 0, z: 0}
   m_MaxChunkCount: 16
@@ -5784,7 +5784,7 @@ GameObject:
   - component: {fileID: 1859995374}
   m_Layer: 6
   m_Name: ClothesStore
-  m_TagString: Untagged
+  m_TagString: ClothesStore
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
