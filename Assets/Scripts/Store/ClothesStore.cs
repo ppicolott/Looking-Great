@@ -55,7 +55,6 @@ public class ClothesStore : MonoBehaviour
     [Header("Store Purchase Button")]
     [SerializeField] private Button _purchaseClothesButton;
 
-    public Clothes[] ClothesData => _clothesData;
     public Animator[] FittingRoomAnimator => _fittingRoomAnimator;
 
     public static Action OnCustomizePlayer;
@@ -188,8 +187,6 @@ public class ClothesStore : MonoBehaviour
             else
                 _clothesToggles[i].isOn = false;
         }
-
-        OnCustomizePlayer?.Invoke();
     }
 
     private void LoadPriceTags()
@@ -233,12 +230,11 @@ public class ClothesStore : MonoBehaviour
             {
                 _clothesData[i].Purchased = true;
                 _saveLoadSystem.UpdateData(_clothesData[i].FilePath, _clothesData[i], true, true);
+                OnCustomizePlayer?.Invoke();
             }
         }
 
         LoadPriceTags();
         CalculateShopCart();
-
-        OnCustomizePlayer?.Invoke();
     }
 }
