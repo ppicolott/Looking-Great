@@ -1,9 +1,7 @@
-using System;
 using System.Collections.Generic;
 using TMPro;
 using UnityEditor.Animations;
 using UnityEngine;
-using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class ClothesStore : MonoBehaviour
@@ -93,18 +91,18 @@ public class ClothesStore : MonoBehaviour
 
         _purchaseClothesButton.onClick.AddListener(PurchaseClothes);
         _exitStoreButton.onClick.AddListener(ExitStore);
-    }
 
-    private void Start()
-    {
         _clothes = new Clothes[] { _saveLoadSystem.HatOne, _saveLoadSystem.HatTwo, _saveLoadSystem.FemaleHair , _saveLoadSystem.MaleHair ,
             _saveLoadSystem.FemaleUnderwear, _saveLoadSystem.MaleUnderwear , _saveLoadSystem.OutfitOne , _saveLoadSystem.OutfitTwo };
 
         _cartAddedPrices = new List<double>();
         _cartValue = 0;
-        CalculateShopCart();
+    }
 
+    private void OnEnable()
+    {
         LoadPriceTags();
+        CalculateShopCart();
     }
 
     private void OnDestroy()
@@ -151,8 +149,13 @@ public class ClothesStore : MonoBehaviour
 
     private void LoadPriceTags()
     {
-        for (int i = 0; i < _priceTags.Length; i++)
-            _priceTags[i].text = "$ " + string.Format("{0:0.00}", _clothes[i].Price);
+        for (int i = 0; i < _clothes.Length; i++)
+        {
+            if (!_clothes[i].Purchased)
+                _priceTags[i].text = "$ " + string.Format("{0:0.00}", _clothes[i].Price);
+            else
+                _priceTags[i].text = "Purchased";
+        }
     }
 
     private void CalculateShopCart()
@@ -185,6 +188,9 @@ public class ClothesStore : MonoBehaviour
                 _saveLoadSystem.UpdateData(_clothes[i].FilePath, _clothes[i], true, true);
             }
         }
+
+        LoadPriceTags();
+        CalculateShopCart();
     }
 
     private void ExitStore()
