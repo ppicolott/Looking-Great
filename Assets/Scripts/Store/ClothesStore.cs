@@ -311,9 +311,6 @@ public class ClothesStore : MonoBehaviour
             if (!_clothesData[i].Purchased)
                 _clothesToggles[i].interactable = false;
 
-        for (int i = 0; i < _fittingRoomAnimator.Length; i++)
-            _fittingRoomAnimator[i].runtimeAnimatorController = _nakedAnimator;
-
         OnEquipped?.Invoke();
     }
 
@@ -324,8 +321,6 @@ public class ClothesStore : MonoBehaviour
 
     private void ChangeTab(int tabIndex)
     {
-        SetPreviewAnimationDirection(_currentDirection);
-
         if (tabIndex == 0)
         {
             _currentTab = Tabs.BuyTab;
