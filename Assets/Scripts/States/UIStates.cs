@@ -25,6 +25,11 @@ public class UIStates : MonoBehaviour
     [SerializeField] private Button _exitStoreButton;
 
     [Space(10)]
+    [Header("HUD")]
+    [SerializeField] private GameObject _HUDCashText;
+    [SerializeField] private GameObject _backToMainMenu;
+
+    [Space(10)]
     [Header("UI Animation")]
     [SerializeField] private float _transitionXEndPos;
 
@@ -60,9 +65,9 @@ public class UIStates : MonoBehaviour
         StartCoroutine(SetState());
 
         _quitGameButton.onClick.AddListener(() => Application.Quit());
-        _exitStoreButton.onClick.AddListener(StopStore);
+        _exitStoreButton.onClick.AddListener(CloseStore);
 
-        Interactions.OnStoreCollision += StartStore;
+        Interactions.OnStoreCollision += OpeStore;
     }
 
     private void OnDestroy()
@@ -75,7 +80,7 @@ public class UIStates : MonoBehaviour
         _quitGameButton.onClick.RemoveAllListeners();
         _exitStoreButton.onClick.RemoveAllListeners();
 
-        Interactions.OnStoreCollision -= StartStore;
+        Interactions.OnStoreCollision -= OpeStore;
     }
 
     private void NextState()
@@ -131,15 +136,19 @@ public class UIStates : MonoBehaviour
         yield break;
     }
 
-    private void StartStore()
+    private void OpeStore()
     {
         _playerInput.actions.Disable();
         _storeCanvas.SetActive(true);
+        _HUDCashText.SetActive(false);
+        _backToMainMenu.SetActive(false);
     }
 
-    private void StopStore()
+    private void CloseStore()
     {
         _storeCanvas.SetActive(false);
         _playerInput.actions.Enable();
+        _HUDCashText.SetActive(true);
+        _backToMainMenu.SetActive(true);
     }
 }

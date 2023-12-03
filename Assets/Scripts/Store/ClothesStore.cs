@@ -37,6 +37,7 @@ public class ClothesStore : MonoBehaviour
 
     [Space(5)]
     [Header("Cash and Price Tags")]
+    [SerializeField] private TMP_Text _HUDCashText;
     [SerializeField] private TMP_Text _cashText;
     [SerializeField] private TMP_Text[] _priceTags;
     [SerializeField] private TMP_Text _cartTotalText;
@@ -104,7 +105,8 @@ public class ClothesStore : MonoBehaviour
             _outfitsToggles[i].onValueChanged.AddListener(delegate { SetPreviewAnimation(_outfitsToggles[j].isOn, j, _animatorsReferences[3], 4); OnCustomizePlayer?.Invoke(); });
         }
 
-        _cashText.text = "Cash: $ " + string.Format("{0:0.00}", _cash);
+        _cashText.text = "$ " + string.Format("{0:0.00}", _cash);
+        _HUDCashText.text = _cashText.text;
 
         _leftArrow.onClick.AddListener(() => SetPreviewAnimationDirection("IdleLeft"));
         _rightArrow.onClick.AddListener(() => SetPreviewAnimationDirection("IdleRight"));
@@ -207,7 +209,8 @@ public class ClothesStore : MonoBehaviour
     private void PurchaseClothes()
     {
         _cash -= _cartValue;
-        _cashText.text = "Cash: $ " + string.Format("{0:0.00}", _cash);
+        _cashText.text = "$ " + string.Format("{0:0.00}", _cash);
+        _HUDCashText.text = _cashText.text;
         PlayerPrefs.SetString("Cash", _cash.ToString());
 
         _cartAddedPrices.Clear();
