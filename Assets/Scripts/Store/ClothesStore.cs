@@ -55,6 +55,7 @@ public class ClothesStore : MonoBehaviour
     [Space(5)]
     [Header("Store Purchase Button")]
     [SerializeField] private Button _purchaseClothesButton;
+    [SerializeField] private Button _sellClothesButton;
 
     public Animator[] FittingRoomAnimator => _fittingRoomAnimator;
 
@@ -79,30 +80,29 @@ public class ClothesStore : MonoBehaviour
         LoadPriceTags();
         CalculateShopCart();
         LoadEquippedClothes();
-        
 
         for (int i = 0; i < _hatsToggles.Length; i++)
         {
             int j = i;
-            _hatsToggles[i].onValueChanged.AddListener(delegate { SetPreviewAnimation(_hatsToggles[j].isOn, j, _animatorsReferences[0], 1); OnCustomizePlayer?.Invoke(); });
+            _hatsToggles[i].onValueChanged.AddListener(delegate { SetPreviewAnimation(_hatsToggles[j].isOn, j, _animatorsReferences[0], 1); });
         }
 
         for (int i = 0; i < _hairsToggles.Length; i++)
         {
             int j = i;
-            _hairsToggles[i].onValueChanged.AddListener(delegate { SetPreviewAnimation(_hairsToggles[j].isOn, j, _animatorsReferences[1], 2); OnCustomizePlayer?.Invoke(); });
+            _hairsToggles[i].onValueChanged.AddListener(delegate { SetPreviewAnimation(_hairsToggles[j].isOn, j, _animatorsReferences[1], 2); });
         }
 
         for (int i = 0; i < _underwearsToggles.Length; i++)
         {
             int j = i;
-            _underwearsToggles[i].onValueChanged.AddListener(delegate { SetPreviewAnimation(_underwearsToggles[j].isOn, j, _animatorsReferences[2], 3); OnCustomizePlayer?.Invoke(); });
+            _underwearsToggles[i].onValueChanged.AddListener(delegate { SetPreviewAnimation(_underwearsToggles[j].isOn, j, _animatorsReferences[2], 3); });
         }
 
         for (int i = 0; i < _outfitsToggles.Length; i++)
         {
             int j = i;
-            _outfitsToggles[i].onValueChanged.AddListener(delegate { SetPreviewAnimation(_outfitsToggles[j].isOn, j, _animatorsReferences[3], 4); OnCustomizePlayer?.Invoke(); });
+            _outfitsToggles[i].onValueChanged.AddListener(delegate { SetPreviewAnimation(_outfitsToggles[j].isOn, j, _animatorsReferences[3], 4); });
         }
 
         _cashText.text = "$ " + string.Format("{0:0.00}", _cash);
@@ -117,6 +117,7 @@ public class ClothesStore : MonoBehaviour
         _currentDirection = "IdleDown";
 
         _purchaseClothesButton.onClick.AddListener(PurchaseClothes);
+        _sellClothesButton.onClick.AddListener(SellClothes);
     }
 
     private void OnDestroy()
@@ -139,24 +140,31 @@ public class ClothesStore : MonoBehaviour
         _upArrow.onClick.RemoveAllListeners();
 
         _purchaseClothesButton.onClick.RemoveAllListeners();
+        _sellClothesButton.onClick.RemoveAllListeners();
     }
 
     private void SetPreviewAnimation(bool toggleOn, int animatorIndex, AnimatorController[] animatorReference, int currentAnimatorIndex)
     {
-        // Set animations on preview
         if (!toggleOn)
+        {
             _fittingRoomAnimator[currentAnimatorIndex].runtimeAnimatorController = _nakedAnimator;
+            OnCustomizePlayer.Invoke();
+        }
         else
+        {
             _fittingRoomAnimator[currentAnimatorIndex].runtimeAnimatorController = animatorReference[animatorIndex];
+        }
 
-        // Updates clothes equipped data
         for (int i = 0; i < _clothesData.Length; i++)
         {
             bool equiped = _clothesToggles[i].isOn && _clothesData[i].Purchased;
             _saveLoadSystem.UpdateData(_clothesData[i].FilePath, _clothesData[i], _clothesData[i].Purchased, equiped);
+
+            bool selected = _clothesToggles[i].isOn && _clothesData[i].Equipped;
+            if (selected)
+                OnCustomizePlayer.Invoke();
         }
 
-        OnCustomizePlayer?.Invoke();
         SetPreviewAnimationDirection(_currentDirection);
         CalculateShopCart();
     }
@@ -214,7 +222,6 @@ public class ClothesStore : MonoBehaviour
         _cash -= _cartValue;
         _cashText.text = "$ " + string.Format("{0:0.00}", _cash);
         _HUDCashText.text = _cashText.text;
-
         PlayerPrefs.SetString("Cash", _cash.ToString());
 
         _cartAddedPrices.Clear();
@@ -232,5 +239,22 @@ public class ClothesStore : MonoBehaviour
         LoadPriceTags();
         CalculateShopCart();
         OnCustomizePlayer?.Invoke();
+    }
+
+    private void SellClothes()
+    {
+        for (int i = 0; i < _clothesToggles.Length; i++)
+        {
+            if (_clothesToggles[i].isOn && _clothesData[i].Purchased)
+            {
+                _clothesData[i].Purchased = false;
+                _saveLoadSystem.UpdateData(_clothesData[i].FilePath, _clothesData[i], false, false);
+
+                _cash += _clothesData[i].Price;
+                _cashText.text = "$ " + string.Format("{0:0.00}", _cash);
+                _HUDCashText.text = _cashText.text;
+                PlayerPrefs.SetString("Cash", _cash.ToString());
+            }
+        }
     }
 }
