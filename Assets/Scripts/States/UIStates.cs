@@ -2,16 +2,27 @@ using DG.Tweening;
 using System;
 using System.Collections;
 using UnityEngine;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 
 public class UIStates : MonoBehaviour
 {
-    [Header("Screens")]
-    [SerializeField] private GameObject[] _screens;
+    [Header("Player Input")]
+    [SerializeField] private PlayerInput _playerInput;
 
     [Space(10)]
-    [Header("Buttons")]
-    [SerializeField] private Button[] _buttons;
+    [Header("Screens")]
+    [SerializeField] private GameObject[] _screens;
+    [SerializeField] private Button _quitGameButton;
+
+    [Space(10)]
+    [Header("Next State Buttons")]
+    [SerializeField] private Button[] _nextStateButtons;
+
+    [Space(10)]
+    [Header("Store Canvas")]
+    [SerializeField] private GameObject _storeCanvas;
+    [SerializeField] private Button _exitStoreButton;
 
     [Space(10)]
     [Header("UI Animation")]
@@ -32,9 +43,7 @@ public class UIStates : MonoBehaviour
     {
         MainMenuScreen = 0,
         GameplayScreen = 1,
-        VictoryScreen = 2,
-        GameOverScreen = 3,
-        FakeMainMenuScreen = 4
+        FakeMainMenuScreen = 2
     }
 
     private void Awake()
@@ -42,21 +51,31 @@ public class UIStates : MonoBehaviour
         if (_transitionXEndPos == 0)
             _transitionXEndPos = -2000f;
 
-        for (int i = 0; i < _buttons.Length; i++)
-            _buttons[i].onClick.AddListener(NextState);
+        for (int i = 0; i < _nextStateButtons.Length; i++)
+            _nextStateButtons[i].onClick.AddListener(NextState);
 
         _gameStateMaxIndex = Enum.GetValues(typeof(GameStates)).Length - 1;
         _gameStateIndex = 0;
         CurrentState = GameStates.MainMenuScreen;
-        // StartCoroutine(SetState());
+        StartCoroutine(SetState());
+
+        _quitGameButton.onClick.AddListener(() => Application.Quit());
+        _exitStoreButton.onClick.AddListener(StopStore);
+
+        Interactions.OnStoreCollision += StartStore;
     }
 
     private void OnDestroy()
     {
         StopAllCoroutines();
 
-        for (int i = 0; i < _buttons.Length; i++)
-            _buttons[i].onClick.RemoveAllListeners();
+        for (int i = 0; i < _nextStateButtons.Length; i++)
+            _nextStateButtons[i].onClick.RemoveAllListeners();
+
+        _quitGameButton.onClick.RemoveAllListeners();
+        _exitStoreButton.onClick.RemoveAllListeners();
+
+        Interactions.OnStoreCollision -= StartStore;
     }
 
     private void NextState()
@@ -75,6 +94,7 @@ public class UIStates : MonoBehaviour
         switch (CurrentState)
         {
             case GameStates.MainMenuScreen:
+                _storeCanvas.SetActive(false);
                 SetScreens(GameStates.MainMenuScreen);
                 break;
 
@@ -82,16 +102,10 @@ public class UIStates : MonoBehaviour
                 StartCoroutine(AnimateScreens(_screens[_gameStateIndex - 1], _screens[_gameStateIndex]));
                 break;
 
-            case GameStates.VictoryScreen:
-                StartCoroutine(AnimateScreens(_screens[_gameStateIndex - 1], _screens[_gameStateIndex]));
-                break;
-
-            case GameStates.GameOverScreen:
-                StartCoroutine(AnimateScreens(_screens[_gameStateIndex - 1], _screens[_gameStateIndex]));
-                break;
-
             case GameStates.FakeMainMenuScreen:
                 StartCoroutine(AnimateScreens(_screens[_gameStateIndex - 1], _screens[_gameStateIndex]));
+                yield return new WaitForSeconds(1f);
+                NextState();
                 break;
         }
         yield break;
@@ -115,5 +129,17 @@ public class UIStates : MonoBehaviour
         previousScreen.transform.localPosition = Vector3.zero;
 
         yield break;
+    }
+
+    private void StartStore()
+    {
+        _playerInput.actions.Disable();
+        _storeCanvas.SetActive(true);
+    }
+
+    private void StopStore()
+    {
+        _storeCanvas.SetActive(false);
+        _playerInput.actions.Enable();
     }
 }

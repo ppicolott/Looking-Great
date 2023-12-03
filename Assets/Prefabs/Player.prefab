@@ -662,11 +662,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3f5f3bb649007524e81240aea7346760, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  _clothesStore: {fileID: 0}
   _clothesAnimators:
   - {fileID: 6324549276445007292}
   - {fileID: 5627848191320531709}
   - {fileID: 828021348120049300}
   - {fileID: 6108993616641215015}
+  _animatorControllers:
+  - {fileID: 9100000, guid: af785aaa285f4984ba69622d3db75f0c, type: 2}
+  - {fileID: 9100000, guid: 6929b3e6a845678468108959f86ca283, type: 2}
+  - {fileID: 9100000, guid: b2af50461cb14d24a8f80f4b054d0dd5, type: 2}
+  - {fileID: 9100000, guid: 7be29f78135462144a185ce64c0358ae, type: 2}
+  - {fileID: 9100000, guid: 8d010388ce71c4a4fac398b8d8cdbeb4, type: 2}
+  - {fileID: 9100000, guid: d81424f5f51264948ad8621713dbb172, type: 2}
+  - {fileID: 9100000, guid: ac8b5b424e323824e8661393943252d5, type: 2}
+  - {fileID: 9100000, guid: 0df31d56199960049ae3baa5fc741f79, type: 2}
+  - {fileID: 9100000, guid: 7deb2e3e2c506dd46a8b876b85b590c1, type: 2}
+  _currentAnimatorControllers: []
   _hatsAnimators:
   - {fileID: 9100000, guid: 7be29f78135462144a185ce64c0358ae, type: 2}
   - {fileID: 9100000, guid: 8d010388ce71c4a4fac398b8d8cdbeb4, type: 2}

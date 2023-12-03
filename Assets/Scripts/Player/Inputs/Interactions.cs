@@ -1,15 +1,20 @@
-using System.Collections;
-using System.Collections.Generic;
+using System;
 using UnityEngine;
 
 public class Interactions : MonoBehaviour
 {
+    public static Action OnStoreCollision;
 
-    private void OnCollisionStay2D(Collision2D collision)
+    private void OnCollisionEnter2D(Collision2D collision)
     {
+        // TODO
+        // Temporary:
         if (collision.transform.tag.Equals("ClothesStore"))
-        {
-            Debug.Log("!");
-        }
+            OnStoreCollision?.Invoke();
+    }
+
+    private void OnCollisionExit2D(Collision2D collision)
+    {
+        // TODO
     }
 }
