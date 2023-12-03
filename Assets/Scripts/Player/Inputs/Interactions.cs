@@ -1,20 +1,48 @@
 using System;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class Interactions : MonoBehaviour
 {
+    [SerializeField] private InputActionReference _interactionKeyInput;
+    [SerializeField] private GameObject _interactionKey;
+
+    private bool _isDetectingStore;
+
     public static Action OnStoreCollision;
 
-    private void OnCollisionEnter2D(Collision2D collision)
+    private void Awake()
     {
-        // TODO
-        // Temporary:
-        if (collision.transform.tag.Equals("ClothesStore"))
-            OnStoreCollision?.Invoke();
+        _isDetectingStore = false;
+        _interactionKeyInput.action.started += _ => OpenStore();
     }
 
-    private void OnCollisionExit2D(Collision2D collision)
+    private void OnDestroy()
     {
-        // TODO
+        _interactionKeyInput.action.started -= _ => OpenStore();
+    }
+
+    private void OpenStore()
+    {
+        if (_isDetectingStore)
+        {
+            OnStoreCollision?.Invoke();
+            _interactionKey.SetActive(false);
+        }
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.transform.tag.Equals("ClothesStore"))
+        {
+            _interactionKey.SetActive(true);
+            _isDetectingStore = true;
+        }
+    }
+
+    private void OnTriggerExit2D(Collider2D collisio)
+    {
+        _interactionKey.SetActive(false);
+        _isDetectingStore = false;
     }
 }
