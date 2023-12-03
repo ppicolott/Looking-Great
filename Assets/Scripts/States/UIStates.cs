@@ -42,7 +42,7 @@ public class UIStates : MonoBehaviour
 #if UNITY_EDITOR
     [ReadOnly] public GameStates CurrentState;
 #else
-    public States CurrentState;
+    public GameStates CurrentState;
 #endif
 
     public enum GameStates
@@ -102,15 +102,18 @@ public class UIStates : MonoBehaviour
         switch (CurrentState)
         {
             case GameStates.MainMenuScreen:
+                _playerInput.actions.Disable();
                 _storeCanvas.SetActive(false);
                 SetScreens(GameStates.MainMenuScreen);
                 break;
 
             case GameStates.GameplayScreen:
+                _playerInput.actions.Enable();
                 StartCoroutine(AnimateScreens(_screens[_gameStateIndex - 1], _screens[_gameStateIndex]));
                 break;
 
             case GameStates.FakeMainMenuScreen:
+                _playerInput.actions.Disable();
                 StartCoroutine(AnimateScreens(_screens[_gameStateIndex - 1], _screens[_gameStateIndex]));
                 yield return new WaitForSeconds(1f);
                 NextState();

@@ -1,7 +1,6 @@
 using System;
 using System.Collections.Generic;
 using TMPro;
-using UnityEditor.Animations;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -35,11 +34,11 @@ public class ClothesStore : MonoBehaviour
     [Space(5)]
     [Header("Animations")]
     [SerializeField] private Animator[] _fittingRoomAnimator;
-    [SerializeField] private AnimatorController[] _hatsAnimators;
-    [SerializeField] private AnimatorController[] _hairsAnimators;
-    [SerializeField] private AnimatorController[] _underwearAnimators;
-    [SerializeField] private AnimatorController[] _outfitsAnimators;
-    [SerializeField] private AnimatorController _nakedAnimator;
+    [SerializeField] private RuntimeAnimatorController[] _hatsAnimators;
+    [SerializeField] private RuntimeAnimatorController[] _hairsAnimators;
+    [SerializeField] private RuntimeAnimatorController[] _underwearAnimators;
+    [SerializeField] private RuntimeAnimatorController[] _outfitsAnimators;
+    [SerializeField] private RuntimeAnimatorController _nakedAnimator;
 
     [Space(5)]
     [Header("Cash and Price Tags")]
@@ -56,7 +55,7 @@ public class ClothesStore : MonoBehaviour
     private double _cartValue;
     private double _cash;
 
-    private AnimatorController[][] _animatorsReferences;
+    private RuntimeAnimatorController[][] _animatorsReferences;
     private string _currentDirection;
 
     [Space(5)]
@@ -130,7 +129,7 @@ public class ClothesStore : MonoBehaviour
         _downArrow.onClick.AddListener(() => SetPreviewAnimationDirection("IdleDown"));
         _upArrow.onClick.AddListener(() => SetPreviewAnimationDirection("IdleUp"));
 
-        _animatorsReferences = new AnimatorController[][] { _hatsAnimators, _hairsAnimators, _underwearAnimators, _outfitsAnimators };
+        _animatorsReferences = new RuntimeAnimatorController[][] { _hatsAnimators, _hairsAnimators, _underwearAnimators, _outfitsAnimators };
         _currentDirection = "IdleDown";
 
         _buyTabButton.onClick.AddListener(() => ChangeTab((int)Tabs.BuyTab));
@@ -188,7 +187,7 @@ public class ClothesStore : MonoBehaviour
         _HUDInvetory.onClick.RemoveAllListeners();
     }
 
-    private void SetPreviewAnimation(bool toggleOn, int animatorIndex, AnimatorController[] animatorReference, int currentAnimatorIndex)
+    private void SetPreviewAnimation(bool toggleOn, int animatorIndex, RuntimeAnimatorController[] animatorReference, int currentAnimatorIndex)
     {
         if (!toggleOn)
             _fittingRoomAnimator[currentAnimatorIndex].runtimeAnimatorController = _nakedAnimator;

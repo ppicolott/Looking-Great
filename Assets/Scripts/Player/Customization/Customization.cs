@@ -1,6 +1,5 @@
 using System.Collections.Generic;
 using System.IO;
-using UnityEditor.Animations;
 using UnityEngine;
 
 public class Customization : MonoBehaviour
@@ -8,10 +7,6 @@ public class Customization : MonoBehaviour
     [SerializeField] private ClothesStore _clothesStore;
     [SerializeField] private Animator[] _clothesAnimators;
     [SerializeField] private List<RuntimeAnimatorController> _animatorControllers;
-    [SerializeField] private AnimatorController[] _hatsAnimators;
-    [SerializeField] private AnimatorController[] _hairsAnimators;
-    [SerializeField] private AnimatorController[] _underwearAnimators;
-    [SerializeField] private AnimatorController[] _outfitsAnimators;
     private string _customizationFilePath;
     private Dictionary<string, RuntimeAnimatorController> _currentVisuals;
     private List<string> _currentAnimatorControllers;
