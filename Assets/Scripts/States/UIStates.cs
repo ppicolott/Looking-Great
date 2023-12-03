@@ -13,10 +13,11 @@ public class UIStates : MonoBehaviour
     [Space(10)]
     [Header("Screens")]
     [SerializeField] private GameObject[] _screens;
+    [SerializeField] private Button _quitGameButton;
 
     [Space(10)]
-    [Header("Buttons")]
-    [SerializeField] private Button[] _buttons;
+    [Header("Next State Buttons")]
+    [SerializeField] private Button[] _nextStateButtons;
 
     [Space(10)]
     [Header("Store Canvas")]
@@ -42,9 +43,7 @@ public class UIStates : MonoBehaviour
     {
         MainMenuScreen = 0,
         GameplayScreen = 1,
-        VictoryScreen = 2,
-        GameOverScreen = 3,
-        FakeMainMenuScreen = 4
+        FakeMainMenuScreen = 2
     }
 
     private void Awake()
@@ -52,14 +51,15 @@ public class UIStates : MonoBehaviour
         if (_transitionXEndPos == 0)
             _transitionXEndPos = -2000f;
 
-        for (int i = 0; i < _buttons.Length; i++)
-            _buttons[i].onClick.AddListener(NextState);
+        for (int i = 0; i < _nextStateButtons.Length; i++)
+            _nextStateButtons[i].onClick.AddListener(NextState);
 
         _gameStateMaxIndex = Enum.GetValues(typeof(GameStates)).Length - 1;
         _gameStateIndex = 0;
         CurrentState = GameStates.MainMenuScreen;
         StartCoroutine(SetState());
 
+        _quitGameButton.onClick.AddListener(() => Application.Quit());
         _exitStoreButton.onClick.AddListener(StopStore);
 
         Interactions.OnStoreCollision += StartStore;
@@ -69,9 +69,10 @@ public class UIStates : MonoBehaviour
     {
         StopAllCoroutines();
 
-        for (int i = 0; i < _buttons.Length; i++)
-            _buttons[i].onClick.RemoveAllListeners();
+        for (int i = 0; i < _nextStateButtons.Length; i++)
+            _nextStateButtons[i].onClick.RemoveAllListeners();
 
+        _quitGameButton.onClick.RemoveAllListeners();
         _exitStoreButton.onClick.RemoveAllListeners();
 
         Interactions.OnStoreCollision -= StartStore;
@@ -101,16 +102,10 @@ public class UIStates : MonoBehaviour
                 StartCoroutine(AnimateScreens(_screens[_gameStateIndex - 1], _screens[_gameStateIndex]));
                 break;
 
-            case GameStates.VictoryScreen:
-                StartCoroutine(AnimateScreens(_screens[_gameStateIndex - 1], _screens[_gameStateIndex]));
-                break;
-
-            case GameStates.GameOverScreen:
-                StartCoroutine(AnimateScreens(_screens[_gameStateIndex - 1], _screens[_gameStateIndex]));
-                break;
-
             case GameStates.FakeMainMenuScreen:
                 StartCoroutine(AnimateScreens(_screens[_gameStateIndex - 1], _screens[_gameStateIndex]));
+                yield return new WaitForSeconds(1f);
+                NextState();
                 break;
         }
         yield break;
