@@ -203,14 +203,18 @@ public class ClothesStore : MonoBehaviour
         foreach (double price in _cartAddedPrices)
             _cartValue += price;
 
-        _cartTotalText.text = "$ " + string.Format("{0:0.00}", _cartValue);
+        _cartTotalText.text = "Cart: $ " + string.Format("{0:0.00}", _cartValue);
     }
 
     private void PurchaseClothes()
     {
+        if (_cash < _cartValue)
+            return;
+
         _cash -= _cartValue;
         _cashText.text = "$ " + string.Format("{0:0.00}", _cash);
         _HUDCashText.text = _cashText.text;
+
         PlayerPrefs.SetString("Cash", _cash.ToString());
 
         _cartAddedPrices.Clear();
