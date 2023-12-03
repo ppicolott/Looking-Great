@@ -26,6 +26,7 @@ public class UIStates : MonoBehaviour
 
     [Space(10)]
     [Header("HUD")]
+    [SerializeField] private GameObject _HUDInvetory;
     [SerializeField] private GameObject _HUDCashText;
     [SerializeField] private GameObject _backToMainMenu;
 
@@ -68,6 +69,7 @@ public class UIStates : MonoBehaviour
         _exitStoreButton.onClick.AddListener(CloseStore);
 
         Interactions.OnStoreCollision += OpeStore;
+        ClothesStore.OnInventory += OpeStore;
     }
 
     private void OnDestroy()
@@ -81,6 +83,7 @@ public class UIStates : MonoBehaviour
         _exitStoreButton.onClick.RemoveAllListeners();
 
         Interactions.OnStoreCollision -= OpeStore;
+        ClothesStore.OnInventory -= OpeStore;
     }
 
     private void NextState()
@@ -140,6 +143,7 @@ public class UIStates : MonoBehaviour
     {
         _playerInput.actions.Disable();
         _storeCanvas.SetActive(true);
+        _HUDInvetory.gameObject.SetActive(false);
         _HUDCashText.SetActive(false);
         _backToMainMenu.SetActive(false);
     }
@@ -148,6 +152,7 @@ public class UIStates : MonoBehaviour
     {
         _storeCanvas.SetActive(false);
         _playerInput.actions.Enable();
+        _HUDInvetory.gameObject.SetActive(true);
         _HUDCashText.SetActive(true);
         _backToMainMenu.SetActive(true);
     }

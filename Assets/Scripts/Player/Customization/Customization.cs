@@ -34,27 +34,30 @@ public class Customization : MonoBehaviour
 
         LoadCurrentClothes();
 
-        ClothesStore.OnCustomizePlayer += CustomizePlayerVisuals;
+        ClothesStore.OnEquipped += EquipClothes;
     }
 
     private void OnDestroy()
     {
-        ClothesStore.OnCustomizePlayer -= CustomizePlayerVisuals;
+        ClothesStore.OnEquipped -= EquipClothes;
     }
 
-    private void CustomizePlayerVisuals()
+    private void EquipClothes()
     {
         _currentAnimatorControllers.Clear();
 
-        for (int i = 0; i < _clothesStore.FittingRoomAnimator.Length - 1; i++)
+        for (int i = 0; i < _clothesAnimators.Length; i++)
         {
-            int j = i + 1;
-            _clothesAnimators[i].runtimeAnimatorController = _clothesStore.FittingRoomAnimator[j].runtimeAnimatorController;
+            string currentAnimState = _clothesAnimators[i].GetCurrentAnimatorStateInfo(0).ToString();
+            _clothesAnimators[i].runtimeAnimatorController = _clothesStore.FittingRoomAnimator[i + 1].runtimeAnimatorController;
+            if (currentAnimState != null)
+                _clothesAnimators[i].Play(currentAnimState);
             _currentAnimatorControllers.Add(_clothesAnimators[i].runtimeAnimatorController.name);
         }
 
         SaveCurrentClothes();
     }
+
 
     private void SaveCurrentClothes()
     {
@@ -62,7 +65,6 @@ public class Customization : MonoBehaviour
 
         for (int i = 0; i < _currentAnimatorControllers.Count; i++)
             File.AppendAllText(_customizationFilePath, _currentAnimatorControllers[i] + "\n");
-
     }
 
     private void LoadCurrentClothes()

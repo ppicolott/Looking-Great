@@ -20,7 +20,7 @@ TextureImporter:
     externalNormalMap: 0
     heightScale: 0.25
     normalMapFilter: 0
-  isReadable: 0
+  isReadable: 1
   streamingMipmaps: 0
   streamingMipmapsPriority: 0
   vTOnly: 0
@@ -1505,14 +1505,14 @@ TextureImporter:
       char_a_p1_5hat_pfht_v04_37: 1296291172
       char_a_p1_5hat_pfht_v04_19: 2106302429
       char_a_p1_5hat_pfht_v04_57: -1010695993
-      char_a_p1_5hat_pfht_v04_25: -373965873
-      char_a_p1_5hat_pfht_v04_18: -1606304432
-      char_a_p1_5hat_pfht_v04_41: -1940184246
-      char_a_p1_5hat_pfht_v04_3: -816200902
-      char_a_p1_5hat_pfht_v04_22: -807887631
-      char_a_p1_5hat_pfht_v04_31: 2087251761
-      char_a_p1_5hat_pfht_v04_38: -108593834
       char_a_p1_5hat_pfht_v04_49: -387727544
+      char_a_p1_5hat_pfht_v04_25: -373965873
+      char_a_p1_5hat_pfht_v04_3: -816200902
+      char_a_p1_5hat_pfht_v04_41: -1940184246
+      char_a_p1_5hat_pfht_v04_18: -1606304432
+      char_a_p1_5hat_pfht_v04_31: 2087251761
+      char_a_p1_5hat_pfht_v04_22: -807887631
+      char_a_p1_5hat_pfht_v04_38: -108593834
       char_a_p1_5hat_pfht_v04_15: -694089693
       char_a_p1_5hat_pfht_v04_62: -1839445975
       char_a_p1_5hat_pfht_v04_43: 1346043349
